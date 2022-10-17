@@ -1,14 +1,17 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-// const { Node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
 /**
 * Implement simple binary search tree according to task description
 * using Node from extensions
 */
 class BinarySearchTree {
-  head = null
-  
+  head = null;
+  left = null;
+  right = null;
+  current = null;
+
 
   root() {
     return this.head
@@ -17,70 +20,103 @@ class BinarySearchTree {
   }
 
   add(data) {
-    if (this.left) {
-      this.left.parent = null;
+    if (!this.head) {
+      this.head = new Node(data);
+      this.current = this.head;
+      return;
+    } else {
+      if (data < this.current.data) {
+        if (this.current.left) {
+          this.current = this.current.left;
+          this.add(data);
+        } else {
+          this.current.left = new Node(data);
+          this.current = this.root();
+          return;
+        }
+
+
+      } else if (data > this.current.data) {
+        if (this.current.right) {
+          this.current = this.current.right;
+          this.add(data);
+        } else {
+          this.current.right = new Node(data);
+          this.current = this.root();
+          return;
+        }
+
+      }
     }
-    if (data) {
-      this.left = data;
-      this.left.parent = this;
-    }
-
-    if (this.right) {
-      this.right.parent = null;
-    }
-    if (data) {
-      this.right = data;
-      this.right.parent = this;
-    }
-
-    return data
-
-
-  // function  insert(data) {
-  //   let newNode = new BinarySearchTree(data)
-  //   if (this.root === null) {
-  //     this.root = newNode;
-  //     return;
-  //   }
-  //   this._insert(this.root, newNode)
-  // }
-
-  // function _insert(currentNode, newNode) {
-  //   if (newNode.value < currentNode.value) {
-  //     if (currentNode.left === null) {
-  //       currentNode.left = newNode;
-  //     } else {
-  //       this._insert(currentNode.left, newNode);
-  //     }
-  //   }
-
-  //   if (newNode.value > currentNode.value) {
-  //     if (currentNode.right === null) {
-  //       currentNode.right = newNode;
-  //     } else {
-  //       this._insert(currentNode.right, newNode);
-  //     }
-  //   }
-  //   return newNode
-  //   // if (newNode.value === currentNode.value) {
-    //   console.warn(elementExistMessage);
-    // }
-
+    this.current = this.root();
+    return
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-}
+  }
 
   has(data) {
+    return !!this.find(data);
+    // if (this.current) {
+    //   if (data < this.current.data) {
+    //     if (this.current.left) {
+    //       this.current = this.current.left;
+    //       this.has(data);
+    //     } else {
+    //       this.current = this.root();
+    //       return false;
+    //     }
+
+
+    //   } else if (data > this.current.data) {
+    //     if (this.current.right) {
+    //       this.current = this.current.right;
+    //       this.has(data);
+    //     } else {
+    //       this.current = this.root();
+    //       return false;
+    //     }
+
+    //   }
+    //   return true;
+    // }
+    // return false;
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
   }
 
   find(data) {
+    if (this.current) {
+      if (data < this.current.data) {
+        if (this.current.left) {
+          this.current = this.current.left;
+          this.find(data);
+        } else {
+          this.current = this.root();
+          return null;
+        }
+
+
+      } else if (data > this.current.data) {
+        if (this.current.right) {
+          this.current = this.current.right;
+          this.find(data);
+        } else {
+          this.current = this.root();
+          return null;
+        }
+
+      } 
+      else if (data === this.current.data) {
+        return this.current;
+      }
+    }
+    return null;
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
   }
 
   remove(data) {
+    
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
   }
