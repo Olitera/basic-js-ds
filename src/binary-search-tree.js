@@ -89,7 +89,7 @@ class BinarySearchTree {
       if (data < this.current.data) {
         if (this.current.left) {
           this.current = this.current.left;
-          this.find(data);
+          return this.find(data);
         } else {
           this.current = this.root();
           return null;
@@ -99,7 +99,7 @@ class BinarySearchTree {
       } else if (data > this.current.data) {
         if (this.current.right) {
           this.current = this.current.right;
-          this.find(data);
+          return this.find(data);
         } else {
           this.current = this.root();
           return null;
@@ -107,9 +107,12 @@ class BinarySearchTree {
 
       } 
       else if (data === this.current.data) {
-        return this.current;
+        const result = this.current;
+        this.current = this.root();
+        return result;
       }
     }
+    this.current = this.root();
     return null;
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
